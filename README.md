@@ -9,8 +9,9 @@ Ci.
 
 The improved feature promises full markdown capabilities for release notes that
 are either submitted as string `--release-notes` or as a file
-`--release-notes-file`. This demo repository tests these features. I use the
-[markdown
+`--release-notes-file`. The new feature was triggered by [users complaining
+about bad text escaping](https://github.com/travis-ci/dpl/issues/155). This demo
+repository tests these features. I use the [markdown
 cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) in
 order to cover a wide range of markdown constructs.
 
