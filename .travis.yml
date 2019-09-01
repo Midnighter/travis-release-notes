@@ -24,22 +24,3 @@ install:
 script:
   - pytest
 
-stages:
-  - test
-  - name: deploy
-    if: tag IS present
-
-jobs:
-  include:
-    - stage: deploy
-      install: skip
-      script: skip
-      deploy:
-        - provider: releases
-          edge: true
-          skip_cleanup: true
-          api_key: $GITHUB_TOKEN
-          release_notes_file: "release-notes/${TRAVIS_TAG}.md"
-          on:
-            tags: true
-            repo: $GITHUB_REPO
