@@ -1,0 +1,41 @@
+language: minimal
+sudo: false
+
+git:
+  depth: 2
+
+branches:
+  only:
+    - master
+    - devel
+    - /^[0-9]+\.[0-9]+\.[0-9]+[.0-9ab]*$/
+
+env:
+  global:
+    - GITHUB_REPO=Midnighter/travis-release-notes
+
+matrix:
+  fast_finish: true
+
+script:
+  - echo "Testing would occur here."
+
+stages:
+  - test
+  - name: deploy
+    if: tag IS present
+
+jobs:
+  include:
+    - stage: deploy
+      script:
+        - echo "Deploying..."
+      deploy:
+        - provider: releases
+          edge: true
+          skip_cleanup: true
+          api_key: $GITHUB_TOKEN
+          release_notes_file: "release-notes/${TRAVIS_TAG}.md"
+          on:
+            tags: true
+            repo: $GITHUB_REPO
