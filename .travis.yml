@@ -7,20 +7,41 @@ git:
 
 branches:
   only:
-    - master
-    - devel
-    - /^[0-9]+\.[0-9]+\.[0-9]+[.0-9ab]*$/
+  - master
+  - devel
+  - /^[0-9]+\.[0-9]+\.[0-9]+[.0-9ab]*$/
 
 env:
   global:
-    - GITHUB_REPO=Midnighter/travis-release-notes
+  - GITHUB_REPO=Midnighter/travis-release-notes
 
 matrix:
   fast_finish: true
 
 install:
-  - pip install pytest hypothesis
+- pip install pytest hypothesis
 
 script:
-  - pytest
+- pytest
 
+stages:
+- test
+- name: deploy
+  if: tag IS present
+
+jobs:
+  include:
+  - stage: deploy
+    install: skip
+    script:
+    - echo "Deploying..."
+    deploy:
+    - provider: releases
+      skip_cleanup: true
+      api_key: $GITHUB_TOKEN
+      on:
+        tags: true
+        repo: $GITHUB_REPO
+
+notifications:
+  email: false
