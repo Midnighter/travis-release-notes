@@ -37,6 +37,9 @@ jobs:
     - echo "Deploying..."
     deploy:
     - provider: releases
+      edge:
+        branch: master
+      release_notes_file: "./release-notes/${TRAVIS_TAG}"
       skip_cleanup: true
       api_key: $GITHUB_TOKEN
       on:
