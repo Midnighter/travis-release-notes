@@ -15,12 +15,6 @@ env:
   global:
   - GITHUB_REPO=Midnighter/travis-release-notes
 
-install:
-- pip install pytest hypothesis
-
-script:
-- pytest
-
 stages:
 - test
 - name: deploy
@@ -29,10 +23,14 @@ stages:
 jobs:
   fast_finish: true
   include:
+  - stage: test
+    install:
+    - pip install pytest hypothesis
+    script:
+    - pytest
   - stage: deploy
     install: skip
-    script:
-    - echo "Deploying..."
+    script: skip
     deploy:
     - provider: releases
       skip_cleanup: true
