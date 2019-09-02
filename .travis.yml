@@ -15,9 +15,6 @@ env:
   global:
   - GITHUB_REPO=Midnighter/travis-release-notes
 
-matrix:
-  fast_finish: true
-
 install:
 - pip install pytest hypothesis
 
@@ -30,6 +27,7 @@ stages:
   if: tag IS present
 
 jobs:
+  fast_finish: true
   include:
   - stage: deploy
     install: skip
@@ -37,9 +35,8 @@ jobs:
     - echo "Deploying..."
     deploy:
     - provider: releases
-      edge:
-        branch: master
-      release_notes_file: "./release-notes/${TRAVIS_TAG}"
+      edge: true
+      release_notes_file: "./release-notes/${TRAVIS_TAG}.md"
       skip_cleanup: true
       api_key: $GITHUB_TOKEN
       on:
